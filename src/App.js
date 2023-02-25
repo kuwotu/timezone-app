@@ -1,23 +1,13 @@
-import logo from "./logo.svg";
-import "./App.css";
+import styles from "./App.module.css";
+import Card from "./UI/Card";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          <code>Welcome to the app!</code>
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className={styles.App}>
+      <header className={styles.font}>
+        <p>Welcome to the app!</p>
       </header>
+      <Card timezone="GMT + 1" city="London" time="07:00:00" />
     </div>
   );
 }
