@@ -20,11 +20,7 @@ const Form = ({ setLocationsData }) => {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        setLocationsData((prevState) => [
-          ...prevState,
-          { ...data, time: "10pm" },
-        ]);
+        setLocationsData((prevState) => [...prevState, data]);
       })
       .catch((error) => console.log(error));
   }
