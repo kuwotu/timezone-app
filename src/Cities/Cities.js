@@ -20,17 +20,17 @@ const Cities = ({ locationsData }) => {
   }));
 
   console.log(allCitiesData);
-  allCitiesData.map((location, index) => {
-    return (
-      <Card
-        key={index}
-        timezone={location.timezone}
-        city={location.city}
-        time={location.time}
-      ></Card>
-    );
-  });
-
-  return allCitiesData;
+  return (
+    <>
+      {allCitiesData.map((location, index) => (
+        <Card
+          key={index}
+          timezone={location.timezone}
+          city={location.city}
+          time={location.time}
+        />
+      ))}
+    </>
+  );
 };
 export default Cities;

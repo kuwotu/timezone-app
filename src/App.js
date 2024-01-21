@@ -12,7 +12,7 @@ function App() {
         <p>Welcome to the app!</p>
       </header>
       <Form setLocationsData={setLocationsData} />
-      <Cities locationsData={locationsData}></Cities>
+      <Cities locationsData={locationsData} />
     </div>
   );
 }
