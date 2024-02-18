@@ -4,15 +4,15 @@ import Cities from "./Cities/Cities.js";
 import { useState } from "react";
 
 function App() {
-  const [locationsData, setLocationsData] = useState([]);
+  const [timezones, setTimezones] = useState([]);
 
   return (
     <div className={styles.App}>
       <header className={styles.font}>
         <p>Welcome to the app!</p>
       </header>
-      <Form setLocationsData={setLocationsData} />
-      <Cities locationsData={locationsData} />
+      <Form setTimezones={setTimezones} />
+      <Cities setTimezones={setTimezones} timezones={timezones} />
     </div>
   );
 }

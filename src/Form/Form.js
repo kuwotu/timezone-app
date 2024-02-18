@@ -1,35 +1,47 @@
 import { useRef } from "react";
 
-const Form = ({ setLocationsData }) => {
-  const locationElement = useRef();
+const Form = ({ setTimezones }) => {
+  const cityInput = useRef();
 
-  // const [location, setLocation] = useState("");
+  const fetchTimezonesData = async (cityInput) => {
+    try {
+      const response = await fetch(
+        `https://api.api-ninjas.com/v1/timezone?city=${cityInput.current.value}`,
+        {
+          method: "GET",
+          headers: {
+            "X-Api-Key": process.env.REACT_APP_TIMEZONE_API_KEY,
+          },
+        }
+      );
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error fetching city data:", error);
+      return null;
+    }
+  };
 
-  function formOnSubmit(event) {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // setLocation(locationElement.current.value);
 
-    fetch(
-      `https://api.api-ninjas.com/v1/timezone?city=${locationElement.current.value}`,
-      {
-        method: "GET",
-        headers: {
-          "X-Api-Key": process.env.REACT_APP_TIMEZONE_API_KEY,
-        },
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setLocationsData((prevState) => [...prevState, data]);
-      })
-      .catch((error) => console.log(error));
-  }
+    if (cityInput.current.value.trim() === "") {
+      return;
+    }
+    const timezoneData = await fetchTimezonesData(cityInput);
+    if (timezoneData) {
+      const newData = { ...timezoneData, time: null };
+      console.log(newData);
+      setTimezones((prevTimezones) => [...prevTimezones, newData]);
+    }
+    cityInput.current.value = "";
+  };
 
   return (
     <>
-      <form onSubmit={formOnSubmit}>
+      <form onSubmit={handleSubmit}>
         <label>Find the timezone in</label>
-        <input type="text" ref={locationElement} placeholder=""></input>
+        <input type="text" ref={cityInput} placeholder=""></input>
         <button>Submit</button>
       </form>
     </>

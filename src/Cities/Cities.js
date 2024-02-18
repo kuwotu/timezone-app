@@ -1,33 +1,34 @@
+import { useEffect } from "react";
 import Card from "../UI/Card";
 import { DateTime } from "luxon";
 
-// useEffect(() => {
-//   setInterval(() => {
-//     // const now = DateTime.now();
-//     const now = DateTime.local({ zone: "America/New_York" });
-//     setLondonTime(now.toLocaleString(DateTime.TIME_WITH_SECONDS));
-//   }, 1000);
-// }, [londonTime]);
+const Cities = ({ setTimezones, timezones }) => {
+  const updateTimezones = () => {
+    setTimezones((prevTimezones) => {
+      return prevTimezones.map((zone) => ({
+        ...zone,
+        time: DateTime.local().setZone(zone.timezone),
+      }));
+    });
+  };
 
-const timeElapsed = Date.now();
-const today = new Date(timeElapsed);
+  useEffect(() => {
+    const interval = setInterval(updateTimezones, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
-const Cities = ({ locationsData }) => {
-  const allCitiesData = locationsData.map((location, index) => ({
-    ...location,
-    time: today.toLocaleDateString(),
-    key: index,
-  }));
+  const capitalize = (city) => {
+    return city.charAt(0).toUpperCase() + city.slice(1);
+  };
 
-  console.log(allCitiesData);
   return (
     <>
-      {allCitiesData.map((location, index) => (
+      {timezones.map((location, index) => (
         <Card
           key={index}
           timezone={location.timezone}
-          city={location.city}
-          time={location.time}
+          city={capitalize(location.city)}
+          time={location.time ? location.time.toFormat("HH:mm:ss") : ""}
         />
       ))}
     </>
