@@ -22,6 +22,10 @@ const Form = ({ setTimezones }) => {
     }
   };
 
+  const capitalise = (city) => {
+    return city.charAt(0).toUpperCase() + city.slice(1);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -30,8 +34,11 @@ const Form = ({ setTimezones }) => {
     }
     const timezoneData = await fetchTimezonesData(cityInput);
     if (timezoneData) {
-      const newData = { ...timezoneData, time: null };
-      console.log(newData);
+      const newData = {
+        ...timezoneData,
+        city: capitalise(timezoneData.city),
+        time: null,
+      };
       setTimezones((prevTimezones) => [...prevTimezones, newData]);
     }
     cityInput.current.value = "";

@@ -17,18 +17,20 @@ const Cities = ({ setTimezones, timezones }) => {
     return () => clearInterval(interval);
   }, []);
 
-  const capitalize = (city) => {
-    return city.charAt(0).toUpperCase() + city.slice(1);
+  const handleDeleteTimezone = (city) => {
+    setTimezones((prev) => prev.filter((timezone) => timezone.city !== city));
+    console.log(`${city} clicked`);
   };
 
   return (
     <>
-      {timezones.map((location, index) => (
+      {timezones.map((location) => (
         <Card
-          key={index}
+          key={location.city}
           timezone={location.timezone}
-          city={capitalize(location.city)}
+          city={location.city}
           time={location.time ? location.time.toFormat("HH:mm:ss") : ""}
+          onDelete={handleDeleteTimezone}
         />
       ))}
     </>
