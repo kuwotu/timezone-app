@@ -1,7 +1,11 @@
 import { useRef } from "react";
 
-const Form = ({ setTimezones }) => {
+const Form = ({ setTimezones, timezones }) => {
   const cityInput = useRef();
+
+  const capitalise = (city) => {
+    return city.charAt(0).toUpperCase() + city.slice(1);
+  };
 
   const fetchTimezonesData = async (cityInput) => {
     try {
@@ -22,16 +26,22 @@ const Form = ({ setTimezones }) => {
     }
   };
 
-  const capitalise = (city) => {
-    return city.charAt(0).toUpperCase() + city.slice(1);
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (cityInput.current.value.trim() === "") {
       return;
     }
+
+    if (
+      timezones.find(
+        (timezone) => timezone.city === capitalise(cityInput.current.value)
+      )
+    ) {
+      cityInput.current.value = "";
+      return;
+    }
+
     const timezoneData = await fetchTimezonesData(cityInput);
     if (timezoneData) {
       const newData = {

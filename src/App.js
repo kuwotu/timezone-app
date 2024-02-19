@@ -11,7 +11,7 @@ function App() {
       <header className={styles.font}>
         <p>Welcome to the app!</p>
       </header>
-      <Form setTimezones={setTimezones} />
+      <Form setTimezones={setTimezones} timezones={timezones} />
       <Cities setTimezones={setTimezones} timezones={timezones} />
     </div>
   );
