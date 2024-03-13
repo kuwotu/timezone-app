@@ -1,19 +1,7 @@
 import React, { MutableRefObject, useRef } from "react";
+import { TimezoneProps, TimezoneWithDateTime } from "../types/types";
 
-interface Timezone {
-  city: string;
-  timezone: string;
-  time: null;
-}
-
-interface FormProps {
-  setTimezones: React.Dispatch<
-    React.SetStateAction<{ city: string; timezone: string; time: null }[]>
-  >;
-  timezones: Timezone[];
-}
-
-const Form = ({ setTimezones, timezones }: FormProps) => {
+const Form = ({ setTimezones, timezones }: TimezoneProps) => {
   const cityInput: MutableRefObject<HTMLInputElement | null> = useRef(null);
 
   const capitalise = (city: string) => {
@@ -22,8 +10,8 @@ const Form = ({ setTimezones, timezones }: FormProps) => {
 
   const fetchTimezonesData = async (
     cityInput: MutableRefObject<HTMLInputElement | null>
-  ) => {
-    if (cityInput.current) {
+  ): Promise<TimezoneWithDateTime | null> => {
+    if (cityInput.current?.value) {
       try {
         const response = await fetch(
           `https://api.api-ninjas.com/v1/timezone?city=${cityInput.current.value}`,
@@ -41,17 +29,19 @@ const Form = ({ setTimezones, timezones }: FormProps) => {
         return null;
       }
     }
+    return null;
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (cityInput.current && cityInput.current.value.trim() === "") {
+    const inputValue = cityInput.current?.value.trim();
+    if (!inputValue) {
       return;
     }
 
-    const city = cityInput.current!.value;
-    if (timezones.find((timezone) => timezone.city === capitalise(city))) {
+    const city = capitalise(inputValue);
+    if (timezones.find((timezone) => timezone.city === city)) {
       cityInput.current!.value = "";
       return;
     }
@@ -68,6 +58,7 @@ const Form = ({ setTimezones, timezones }: FormProps) => {
       setTimezones((prevTimezones) => [...prevTimezones, newData]);
     }
     cityInput.current!.value = "";
+    return;
   };
 
   return (

@@ -2,15 +2,9 @@ import React from "react";
 import { useEffect } from "react";
 import Card from "../UI/Card";
 import { DateTime } from "luxon";
+import { TimezoneProps } from "../types/types";
 
-interface CitiesProps {
-  setTimezones: React.Dispatch<
-    React.SetStateAction<{ city: string; timezone: string; time: DateTime }[]>
-  >;
-  timezones: { city: string; timezone: string; time: DateTime }[];
-}
-
-const Cities = ({ setTimezones, timezones }: CitiesProps) => {
+const Cities = ({ setTimezones, timezones }: TimezoneProps) => {
   const updateTimezones = () => {
     setTimezones((prevTimezones) => {
       return prevTimezones.map((zone) => ({

@@ -5,7 +5,7 @@ interface CardProps {
   timezone: string;
   city: string;
   time: string;
-  onDelete: () => void;
+  onDelete: (arg: string) => void;
 }
 
 const Card = ({ timezone, city, time, onDelete }: CardProps) => {

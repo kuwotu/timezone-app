@@ -1,10 +1,12 @@
 import styles from "./App.module.css";
 import Form from "./Form/Form";
-import Cities from "./Cities/Cities.js";
+import Cities from "./Cities/Cities";
 import { useState } from "react";
+import React from "react";
+import { TimezoneWithDateTime } from "./types/types";
 
 function App() {
-  const [timezones, setTimezones] = useState([]);
+  const [timezones, setTimezones] = useState<TimezoneWithDateTime[]>([]);
 
   return (
     <div className={styles.App}>
