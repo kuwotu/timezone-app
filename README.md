@@ -1,3 +1,5 @@
+This app has been shelved for now until I find an API able to replace the api ninja cities search functionality, which was put behind a paywall.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
